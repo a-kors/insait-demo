@@ -1,0 +1,275 @@
+---
+import { master, reviews, ratings } from '../data/master';
+---
+
+<section id="reviews" class="rv">
+  <div class="wrap">
+    <header class="section-head" data-reveal>
+      <span class="section-eyebrow">Отзывы</span>
+      <h2>Что пишут после консультаций, игр и&nbsp;тренингов.</h2>
+      <p>
+        Отзывы из&nbsp;обсуждений группы ВКонтакте с&nbsp;именами авторов.
+        Длинные отзывы немного сокращены.
+      </p>
+      <div class="rv__ratings">
+        {ratings.map((r) => (
+          <span class="rv__rating"><b>{r.value}</b> {r.label}</span>
+        ))}
+      </div>
+    </header>
+
+    <div class="rv__wall" data-wall>
+      <div class="rv__cols">
+        {reviews.map((r, i) => (
+          <figure class="rc rc--text" data-reveal data-reveal-delay={Math.min(i * 60, 300)}>
+            <span class="rc__mark" aria-hidden="true">«</span>
+            <blockquote>{r.text}</blockquote>
+            <figcaption>
+              <span class="rc__author">{r.author}</span>
+              <span class="rc__meta">{r.topic ? `${r.topic} · ` : ''}{r.date}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="rv__fade" aria-hidden="true"></div>
+    </div>
+
+    <div class="rv__footer">
+      <button class="btn btn-secondary" type="button" data-more>
+        <span>Показать все отзывы</span>
+        <span class="arrow" aria-hidden="true">↓</span>
+      </button>
+      <a class="btn btn-ghost" href={master.vkBoard} target="_blank" rel="noopener">
+        Все отзывы ВКонтакте →
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-wall]').forEach((wall) => {
+    const section = wall.closest('section');
+    const btn = section?.querySelector<HTMLButtonElement>('[data-more]');
+    btn?.addEventListener('click', () => {
+      wall.classList.add('is-open');
+      btn.hidden = true;
+    });
+  });
+</script>
+
+<style>
+  .rv {
+    background: var(--bg-soft);
+  }
+  .rv__wall {
+    position: relative;
+    max-height: 1100px;
+    overflow: hidden;
+    transition: max-height 0.6s ease;
+    margin-bottom: 32px;
+  }
+  .rv__wall.is-open {
+    max-height: none;
+  }
+  .rv__wall.is-open .rv__fade {
+    display: none;
+  }
+  .rv__fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 220px;
+    background: linear-gradient(to bottom, rgba(243, 237, 225, 0), var(--bg-soft) 92%);
+    pointer-events: none;
+  }
+  .rv__cols {
+    columns: 3;
+    column-gap: 16px;
+  }
+  .rc {
+    display: block;
+    break-inside: avoid;
+    margin: 0 0 16px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow:
+      0 1px 2px rgba(31, 25, 21, 0.05),
+      0 6px 20px rgba(31, 25, 21, 0.06);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .rc:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 2px 4px rgba(31, 25, 21, 0.08),
+      0 18px 32px rgba(31, 25, 21, 0.1);
+  }
+  .rv__ratings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .rv__rating {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px;
+    white-space: nowrap;
+  }
+  .rv__rating b {
+    color: var(--accent);
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .rc--text {
+    padding: 26px 24px 22px;
+    position: relative;
+  }
+  .rc--text:hover {
+    transform: none;
+  }
+  .rc__mark {
+    font-family: var(--font-serif);
+    font-size: 54px;
+    line-height: 0.6;
+    color: var(--accent);
+    opacity: 0.35;
+    display: block;
+    height: 22px;
+  }
+  .rc--text blockquote {
+    margin: 0 0 18px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .rc--text figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .rc__author {
+    font-weight: 500;
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+  .rc__meta {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+  .rc--photo :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .rc__poster {
+    aspect-ratio: 3 / 4;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .rc__poster-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .rc__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 42%, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.35) 70%),
+      linear-gradient(180deg, rgba(31,25,21,0.15) 0%, rgba(31,25,21,0.55) 100%);
+  }
+  .rc__play {
+    position: relative;
+    z-index: 1;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.96);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    padding-left: 4px;
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.45);
+  }
+  .rc__dur {
+    z-index: 1;
+  }
+  .rc__dur {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+  .rc__body {
+    padding: 18px 20px 20px;
+  }
+  .rc__kind {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .rc__body h3 {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    line-height: 1.22;
+    margin: 8px 0 8px;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .muted {
+    color: var(--ink-muted);
+  }
+
+  .rv__footer {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px 28px;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 960px) {
+    .rv__wall {
+      max-height: 1300px;
+    }
+    .rv__cols {
+      columns: 2;
+    }
+  }
+  @media (max-width: 520px) {
+    .rv__wall {
+      max-height: 1500px;
+    }
+    .rv__cols {
+      columns: 1;
+    }
+  }
+</style>
