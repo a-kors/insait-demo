@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import gameImg from '../assets/photos/opening-1.jpg';
 import { games } from '../data/master';
 ---
 
@@ -31,17 +30,6 @@ import { games } from '../data/master';
       ))}
     </div>
 
-    <figure class="strip" data-reveal>
-      <Image
-        src={gameImg}
-        alt="Угощение с логотипом «Инсайт» на открытии центра"
-        widths={[700, 1100, 1400]}
-        sizes="(max-width: 860px) 92vw, 1100px"
-        format="webp"
-        quality={82}
-        loading="lazy"
-      />
-    </figure>
   </div>
 </section>
 
@@ -124,18 +112,6 @@ import { games } from '../data/master';
     color: var(--ink);
   }
 
-  .strip {
-    margin: 0;
-  }
-  .strip :global(img) {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 21 / 8;
-    object-fit: cover;
-    border-radius: 20px;
-    display: block;
-  }
-
   @media (max-width: 1024px) {
     .principles {
       grid-template-columns: repeat(2, 1fr);
@@ -144,9 +120,6 @@ import { games } from '../data/master';
   @media (max-width: 560px) {
     .principles {
       grid-template-columns: 1fr;
-    }
-    .strip :global(img) {
-      aspect-ratio: 3 / 2;
     }
   }
 </style>

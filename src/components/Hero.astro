@@ -38,7 +38,7 @@ import CtaGroup from './CtaGroup.astro';
           src={heroImg}
           alt="Юлия Кравченко, психолог, руководитель центра «Инсайт»"
           widths={[520, 780, 1040]}
-          sizes="(max-width: 1024px) 520px, 440px"
+          sizes="(max-width: 600px) 360px, (max-width: 1024px) 520px, 440px"
           format="webp"
           quality={88}
           loading="eager"
@@ -62,7 +62,7 @@ import CtaGroup from './CtaGroup.astro';
   }
   .grid {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     gap: clamp(32px, 6vw, 80px);
     align-items: center;
   }
@@ -75,6 +75,7 @@ import CtaGroup from './CtaGroup.astro';
   }
   h1 {
     margin-bottom: 24px;
+    font-size: clamp(42px, 5.4vw, 70px);
   }
   .accent {
     color: var(--accent);
@@ -209,6 +210,11 @@ import CtaGroup from './CtaGroup.astro';
   @media (max-width: 600px) {
     .frame {
       max-width: 360px;
+    }
+  }
+  @media (max-width: 480px) {
+    .ctas > .btn-ghost {
+      display: none;
     }
   }
 </style>

@@ -10,8 +10,8 @@ import CtaGroup from './CtaGroup.astro';
       <span class="section-eyebrow">Первый шаг</span>
       <h2>
         Запишитесь на&nbsp;<em>бесплатную диагностическую сессию</em>.
-        Разберёмся в&nbsp;ситуации и&nbsp;составим план действий.
       </h2>
+      <p class="lead">Разберёмся в&nbsp;ситуации и&nbsp;составим план действий.</p>
     </div>
     <div class="actions">
       <CtaGroup variant="primary" tone="dark" />
@@ -24,6 +24,12 @@ import CtaGroup from './CtaGroup.astro';
 </section>
 
 <style>
+  .lead {
+    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 17px;
+    line-height: 1.6;
+  }
   .cta {
     padding-top: clamp(40px, 5vw, 80px);
   }
